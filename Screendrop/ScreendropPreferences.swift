@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
 
 enum ScreendropPreferences {
     static let autoSaveKey = "autoSaveScreenshots"
+    static let saveButtonUsesFolderKey = "saveButtonUsesConfiguredFolder"
     static let autoCopyKey = "autoCopyScreenshotsToClipboard"
     static let autoCompressKey = "autoCompressScreenshots"
     static let exportFormatKey = "exportFormat"
@@ -38,6 +39,17 @@ enum ScreendropPreferences {
     
     static var autoSave: Bool {
         UserDefaults.standard.bool(forKey: autoSaveKey)
+    }
+
+    /// Whether clicking the preview card's Save button writes straight to the
+    /// configured export folder instead of prompting with an NSSavePanel. When
+    /// the user hasn't set this explicitly, it inherits the auto-save value so
+    /// existing behaviour is preserved.
+    static var saveButtonUsesConfiguredFolder: Bool {
+        if UserDefaults.standard.object(forKey: saveButtonUsesFolderKey) == nil {
+            return autoSave
+        }
+        return UserDefaults.standard.bool(forKey: saveButtonUsesFolderKey)
     }
     
     static var autoCopy: Bool {
