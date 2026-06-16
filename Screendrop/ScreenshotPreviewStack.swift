@@ -335,6 +335,7 @@ final class ScreenshotPreviewStack {
                     } else {
                         try ScreenshotFileActions.save(from: url, to: destURL)
                     }
+                    self.dismiss(id: id)
                 } catch {
                     print("Failed to save preview: \(error)")
                 }
